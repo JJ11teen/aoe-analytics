@@ -16,7 +16,7 @@ module.exports = {
     '**/LICENSE',
     '**/*.json',
     '**/*.config.js',
-    // '**/data/**'
+    '**/public/data/**'
   ],
   plugins: [
     [ "@snowpack/plugin-sass", {
