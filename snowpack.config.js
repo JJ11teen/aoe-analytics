@@ -11,12 +11,10 @@ module.exports = {
   exclude: [
     '**/node_modules/**/*',
     '**/.git/**',
+    '**/public/data/**',
     // Build fails unless files without an extension are excluded
     // https://github.com/snowpackjs/snowpack/issues/2966
-    '**/LICENSE',
-    '**/*.json',
-    '**/*.config.js',
-    '**/public/data/**'
+    'LICENSE',
   ],
   plugins: [
     [ "@snowpack/plugin-sass", {
