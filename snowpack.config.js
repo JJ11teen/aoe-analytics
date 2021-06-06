@@ -23,9 +23,7 @@ module.exports = {
       "native": true,
     } ],
   ],
-  packageOptions: { 
-    source: 'remote',
-  },
+  packageOptions: { },
   devOptions: { },
   buildOptions: { },
 };
