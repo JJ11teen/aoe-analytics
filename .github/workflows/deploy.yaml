@@ -7,20 +7,20 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14.x]
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js 14.x
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup node
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ 14.x }}
-      - run: npm ci
-      - run: npm run build
-      - uses: LanceMcCarthy/Action-AzureBlobUpload@v1.9.0
-        name: Deploying build
+          node-version: 14.x
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Deploying build
+        uses: LanceMcCarthy/Action-AzureBlobUpload@v1.9.0
         with:
-          connection_string: ${{ secrets.YourAzureBlobConnectionString }}
+          connection_string: ${{ secrets.AZURE_BLOB_CONNECTION_STRING }}
           container_name: aoelucasfish
           source_folder: dist
