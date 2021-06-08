@@ -41,6 +41,8 @@ export class PlayerMatch {
             Pos: determineMapPosition(p['color'], playerCount)
         }));
 
+        this.TeamGame = this.Teammates.length === 0 && this.Opponents.length === 1;
+
         this.Map = jsonMatch['map_type'];
     }
 
@@ -57,13 +59,10 @@ export class PlayerMatch {
     public Played: CivPos;
     public Teammates: CivPos[];
     public Opponents: CivPos[];
+    public TeamGame: boolean;
 
     // TODO:
     public Map: string;
-
-    public isTeamGame(): boolean {
-        return this.Teammates.length === 0 && this.Opponents.length === 1;
-    }
 
     private static async getWithCache(url: string) {
         const cached = await get(url);
