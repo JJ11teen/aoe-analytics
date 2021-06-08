@@ -1,4 +1,6 @@
 import axios from "axios";
+import { get, set } from 'idb-keyval';
+
 import { Civ, CivUtils } from "./civ";
 import { determineMapPosition, MapPosition } from "./map";
 
@@ -63,11 +65,20 @@ export class PlayerMatch {
         return this.Teammates.length === 0 && this.Opponents.length === 1;
     }
 
-    public static async getPlayerMatches(playerId: number, count: number): Promise<PlayerMatch[]> {
-        // TODO: maybe add cache here?
-        const response = await axios.get(`https://aoe2.net/api/player/matches?game=aoe2de&profile_id=${playerId}&count=${count}`);
+    private static async getWithCache(url: string) {
+        const cached = await get(url);
+        if (cached) {
+            return cached;
+        }
+        const response = await axios.get(url);
+        await set(url, response.data);
+        return response.data;
+    }
 
-        return response.data.filter(
+    public static async getPlayerMatches(playerId: number, count: number): Promise<PlayerMatch[]> {
+        const data = await this.getWithCache(`https://aoe2.net/api/player/matches?game=aoe2de&profile_id=${playerId}&count=${count}`);
+
+        return data.filter(
             // Filter out matches that are not valid:
             //  - no player has won
             //  - there is no version
