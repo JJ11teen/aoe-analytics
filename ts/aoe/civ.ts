@@ -53,12 +53,12 @@ export enum Civ {
 }
 
 export enum CivType {
-    Archer = "a",
-    Cavalry = "c",
-    Infantry = "i",
-    CavalryArcher = "ca",
-    Seige = "s",
-    Meso = "m",
+    Archer = "Archer",
+    Cavalry = "Cavalry",
+    Infantry = "Infantry",
+    CavalryArcher = "CavalryArcher",
+    Seige = "Seige",
+    Mesoamerican = "Mesoamerican",
 }
 
 export class CivUtils {
@@ -88,5 +88,9 @@ export class CivUtils {
     
     public static isCivType(civ: Civ, civType: CivType): boolean {
         return cachedData.tags[civ].includes(civType);
+    }
+
+    public static getCivTypes(civ: Civ): CivType[] {
+        return cachedData.tags[civ].map(t => CivType[t as keyof typeof CivType]);
     }
 }
